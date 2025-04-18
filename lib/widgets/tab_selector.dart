@@ -2,14 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:stich/helpers/tab_state.dart';
 
 class TabSelector extends StatefulWidget {
-  const TabSelector({super.key});
+  const TabSelector({super.key, this.tabState = TabState.suggestions, required this.onTabChange});
+
+  final TabState tabState;
+  final ValueChanged<TabState> onTabChange;
 
   @override
   State<TabSelector> createState() => _TabSelectorState();
 }
 
 class _TabSelectorState extends State<TabSelector> {
-  TabState _tabState = TabState.suggestions;
+  late TabState _tabState;
+  
+  @override
+  void initState() {
+    super.initState();
+    _tabState = widget.tabState;
+  }
+
+  @override
+  void didUpdateWidget(TabSelector tabSelector) {
+    super.didUpdateWidget(tabSelector);
+    if(widget.tabState != tabSelector.tabState) {
+      _tabState = widget.tabState;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +57,7 @@ class _TabSelectorState extends State<TabSelector> {
                   _tabState = TabState.closet;
                 },
               );
+              widget.onTabChange.call(_tabState);
             },
           ),
         ],
@@ -55,6 +73,7 @@ class _TabSelectorState extends State<TabSelector> {
                   _tabState = TabState.suggestions;
                 },
               );
+              widget.onTabChange.call(_tabState);
             },
           ),
           selectedTab(tabState),
@@ -114,3 +133,5 @@ Widget unselectedTab(TabState tabState, Function() onTap) {
     ),
   );
 }
+
+

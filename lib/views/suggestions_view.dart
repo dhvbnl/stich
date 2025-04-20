@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SuggestionsView extends StatefulWidget {
   const SuggestionsView({super.key});
@@ -28,7 +26,9 @@ class _SuggestionsViewState extends State<SuggestionsView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 25,
+      ),
       child: Column(
         children: [
           _title(),
@@ -36,20 +36,23 @@ class _SuggestionsViewState extends State<SuggestionsView> {
           _input(),
           const Divider(),
           OutlinedButton(
-            onPressed: () {
-              print(_textController.text);
-            },
+            onPressed: () {},
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
               shadowColor: WidgetStatePropertyAll<Color>(Colors.transparent),
               side: WidgetStatePropertyAll<BorderSide>(
-                BorderSide(color: Color(0xFF7E8485)),
+                BorderSide(
+                  color: Color(0xFF7E8485),
+                ),
               ),
-              overlayColor: WidgetStatePropertyAll<Color>(Color.fromARGB(73, 126, 132, 133)),
+              overlayColor: WidgetStatePropertyAll<Color>(
+                  Color.fromARGB(73, 126, 132, 133)),
             ),
             child: const Text(
               'imagine',
-              style: TextStyle(color: Color(0xFF7E8485)),
+              style: TextStyle(
+                color: Color(0xFF7E8485),
+              ),
             ),
           ),
           const Spacer(),
@@ -75,16 +78,25 @@ class _SuggestionsViewState extends State<SuggestionsView> {
         ),
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.photo_camera, color: Color(0xFF7E8485)),
+          icon: const Icon(
+            Icons.photo_camera,
+            color: Color(0xFF7E8485),
+          ),
         ),
       ],
     );
   }
 
   Widget _title() {
-    return Row(
+    return const Row(
       children: [
-        Text('stich', style: GoogleFonts.play(fontSize: 40), )
+        Text(
+          'stich',
+          style: TextStyle(
+            fontFamily: 'PlaywriteUSTrad',
+            fontSize: 35,
+          ),
+        )
       ],
     );
   }

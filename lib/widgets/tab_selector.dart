@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stich/helpers/tab_state.dart';
 
 class TabSelector extends StatefulWidget {
-  const TabSelector({super.key, this.tabState = TabState.suggestions, required this.onTabChange});
+  const TabSelector(
+      {super.key,
+      this.tabState = TabState.suggestions,
+      required this.onTabChange});
 
   final TabState tabState;
   final ValueChanged<TabState> onTabChange;
@@ -13,7 +16,7 @@ class TabSelector extends StatefulWidget {
 
 class _TabSelectorState extends State<TabSelector> {
   late TabState _tabState;
-  
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +26,7 @@ class _TabSelectorState extends State<TabSelector> {
   @override
   void didUpdateWidget(TabSelector tabSelector) {
     super.didUpdateWidget(tabSelector);
-    if(widget.tabState != tabSelector.tabState) {
+    if (widget.tabState != tabSelector.tabState) {
       _tabState = widget.tabState;
     }
   }
@@ -124,7 +127,10 @@ Widget unselectedTab(TabState tabState, Function() onTap) {
   return GestureDetector(
     onTap: onTap,
     child: Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+      padding: const EdgeInsets.only(
+        left: 10.0,
+        right: 10.0,
+      ),
       child: Icon(
         tabState == TabState.suggestions ? Icons.auto_awesome : Icons.checkroom,
         color: const Color(0xFF0C1618),
@@ -133,5 +139,3 @@ Widget unselectedTab(TabState tabState, Function() onTap) {
     ),
   );
 }
-
-

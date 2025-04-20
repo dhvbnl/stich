@@ -18,3 +18,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: PlaywriteUSTrad
+      fonts:
+        - asset: assets/fonts/PlaywriteUSTrad-Regular.ttf
+        - asset: assets/fonts/PlaywriteUSTrad-Light.ttf
+        - asset: assets/fonts/PlaywriteUSTrad-Thin.ttf
+        - asset: assets/fonts/PlaywriteUSTrad-ExtraLight.ttf

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/views/suggestions_view.dart';
 import 'package:stich/widgets/tab_selector.dart';
@@ -22,38 +21,46 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return CupertinoApp(
       home: CupertinoPageScaffold(
-        child: Column(
-          children: [
-            if (_selectedTab == TabState.suggestions) Expanded(child: const SuggestionsView()),
-            if (_selectedTab == TabState.closet) Expanded(child: const Placeholder()),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 40,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TabSelector(tabState: _selectedTab,
-                    onTabChange: (newTab) {
-                      setState(() {
-                        _selectedTab = newTab;
-                      });
-                    },),
-                  IconButton.filled(
-                    style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xFF0C1618),
-                      shape: const CircleBorder(),
+        child: SafeArea(
+          child: Column(
+            children: [
+              if (_selectedTab == TabState.suggestions)
+                const Expanded(child: SuggestionsView()),
+              if (_selectedTab == TabState.closet)
+                const Expanded(child: Placeholder()),
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TabSelector(
+                      tabState: _selectedTab,
+                      onTabChange: (newTab) {
+                        setState(
+                          () {
+                            _selectedTab = newTab;
+                          },
+                        );
+                      },
                     ),
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.add,
-                      color: Color(0xFFE2E8DD),
+                    IconButton.filled(
+                      style: IconButton.styleFrom(
+                        backgroundColor: const Color(0xFF0C1618),
+                        shape: const CircleBorder(),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.add,
+                        color: Color(0xFFE2E8DD),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

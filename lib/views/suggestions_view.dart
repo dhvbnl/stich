@@ -91,7 +91,7 @@ class _SuggestionsViewState extends State<SuggestionsView> {
     return const Row(
       children: [
         Text(
-          'stich',
+          'stitch',
           style: TextStyle(
             fontFamily: 'PlaywriteUSTrad',
             fontSize: 35,

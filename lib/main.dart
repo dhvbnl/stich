@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stich/helpers/constants.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/views/suggestions_view.dart';
 import 'package:stich/widgets/tab_selector.dart';
@@ -25,43 +26,64 @@ class _MainAppState extends State<MainApp> {
           child: Column(
             children: [
               if (_selectedTab == TabState.suggestions)
-                const Expanded(child: SuggestionsView()),
+                const Expanded(
+                  child: SuggestionsView(),
+                ),
               if (_selectedTab == TabState.closet)
-                const Expanded(child: Placeholder()),
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 20,
+                const Expanded(
+                  child: Placeholder(),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TabSelector(
-                      tabState: _selectedTab,
-                      onTabChange: (newTab) {
-                        setState(
-                          () {
-                            _selectedTab = newTab;
-                          },
-                        );
-                      },
-                    ),
-                    IconButton.filled(
-                      style: IconButton.styleFrom(
-                        backgroundColor: const Color(0xFF0C1618),
-                        shape: const CircleBorder(),
-                      ),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add,
-                        color: Color(0xFFE2E8DD),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _bottomBar(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _bottomBar() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 20,
+        left: 40,
+        right: 40,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 4,
+            child: TabSelector(
+              initialTab: _selectedTab,
+              onTabChange: (newTab) {
+                setState(
+                  () {
+                    _selectedTab = newTab;
+                  },
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            flex: 1,
+            child: IconButton.filled(
+              style: IconButton.styleFrom(
+                minimumSize: const Size(55, 55),
+                iconSize: 35,
+                backgroundColor: kSecondaryColor,
+                shape: const CircleBorder(),
+              ),
+              onPressed: () {},
+              icon: const Icon(
+                Icons.add,
+                color: kPrimaryColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

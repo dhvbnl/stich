@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stich/chat/chat.dart';
 import 'package:stich/env/env.dart';
 import 'package:stich/helpers/constants.dart';
 import 'package:stich/helpers/tab_state.dart';

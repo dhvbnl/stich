@@ -47,3 +47,4 @@ app.*.map.json
 
 # API related
 .env
+lib/env/env.g.dart

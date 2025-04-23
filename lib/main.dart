@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stich/env/env.dart';
 import 'package:stich/helpers/constants.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/views/suggestions_view.dart';
 import 'package:stich/widgets/tab_selector.dart';
+import 'package:dart_openai/dart_openai.dart';
 
-void main() {
+Future<void> main() async {
+  OpenAI.apiKey = Env.apiKey;
   runApp(const MainApp());
 }
 

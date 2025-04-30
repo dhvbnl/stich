@@ -8,4 +8,11 @@ const kDurationShort = Duration(milliseconds: 300);
 const kDurationNone = Duration(milliseconds: 0);
 const kMaxRadius = Radius.circular(9999);
 const kTabBarHeight = 50.0;
-const kSystemPrompt = "Hi! You are an outfit recommender. I will provide you with a JSON with clothing articles. Based on a given prompt, please pick the best combination of a top, bottom, and shoes";
+const kSystemPrompt = """Hi! You are an outfit recommender. I will provide you 
+with a JSON with clothing articles. Based on a given prompt, please pick the 
+best combination of a top, bottom, and shoes. Please format the output JSON 
+with the following structure: {
+  "top": {id},
+  "bottom": {id},
+  "shoes": {id}
+}""";

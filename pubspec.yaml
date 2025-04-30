@@ -7,6 +7,7 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
+  collection: ^1.19.1
   dart_openai: ^5.1.0
   envied: ^1.1.1
   flutter:

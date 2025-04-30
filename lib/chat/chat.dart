@@ -1,12 +1,12 @@
 import 'package:dart_openai/dart_openai.dart';
 import 'package:stich/helpers/constants.dart';
 
-class Generator {
+class Chat {
   String model;
   String? _clothes;
   OpenAIChatCompletionChoiceMessageModel? _systemMessage;
 
-  Generator({this.model = "gpt-4.1-nano"});
+  Chat({this.model = "gpt-4.1-nano"});
 
   set clothes(String clothes) {
     _clothes = clothes;
@@ -19,7 +19,9 @@ class Generator {
       role: OpenAIChatMessageRole.system,
     );
   }
-Future<OpenAIChatCompletionModel> generateOutfit({required String prompt}) async {
+
+  Future<OpenAIChatCompletionModel> generateOutfit(
+      {required String prompt}) async {
     final userMessage = OpenAIChatCompletionChoiceMessageModel(
       content: [
         OpenAIChatCompletionChoiceMessageContentItemModel.text(
@@ -32,7 +34,8 @@ Future<OpenAIChatCompletionModel> generateOutfit({required String prompt}) async
       _systemMessage!,
       userMessage,
     ];
-    Future<OpenAIChatCompletionModel> chatCompletion = OpenAI.instance.chat.create(
+    Future<OpenAIChatCompletionModel> chatCompletion =
+        OpenAI.instance.chat.create(
       model: model,
       responseFormat: {"type": "json_object"},
       seed: 6,

@@ -11,4 +11,14 @@ class Top extends Article {
     required super.material,
     required this.type,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'primaryColor': primaryColor,
+      'secondaryColor': secondaryColor,
+      'material': material,
+      'type': type.name,
+    };
+  }
 }

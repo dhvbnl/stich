@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stich/providers/closet_provider.dart';
+import 'package:stich/providers/suggestions_provider.dart';
 
 class SuggestionsView extends StatefulWidget {
   const SuggestionsView({super.key});
@@ -25,39 +28,55 @@ class _SuggestionsViewState extends State<SuggestionsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-      ),
-      child: Column(
-        children: [
-          _title(),
-          const Spacer(),
-          _input(),
-          const Divider(),
-          OutlinedButton(
-            onPressed: () {},
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
-              shadowColor: WidgetStatePropertyAll<Color>(Colors.transparent),
-              side: WidgetStatePropertyAll<BorderSide>(
-                BorderSide(
-                  color: Color(0xFF7E8485),
+    return Consumer2<ClosetProvider, SuggestionsProvider>(
+      builder: (context, closet, suggestions, child) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
+          ),
+          child: Column(
+            children: [
+              _title(),
+              const Spacer(),
+              _input(),
+              const Divider(),
+              OutlinedButton(
+                onPressed: () {
+                  if (_textController.text.isEmpty) {
+                    return;
+                  }
+                  generateOutfit(
+                    closet: closet,
+                    suggestions: suggestions,
+                    prompt: _textController.text,
+                  );
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                  shadowColor:
+                      WidgetStatePropertyAll<Color>(Colors.transparent),
+                  side: WidgetStatePropertyAll<BorderSide>(
+                    BorderSide(
+                      color: Color(0xFF7E8485),
+                    ),
+                  ),
+                  overlayColor: WidgetStatePropertyAll<Color>(
+                      Color.fromARGB(73, 126, 132, 133)),
+                ),
+                child: const Text(
+                  'imagine',
+                  style: TextStyle(
+                    color: Color(0xFF7E8485),
+                  ),
                 ),
               ),
-              overlayColor: WidgetStatePropertyAll<Color>(
-                  Color.fromARGB(73, 126, 132, 133)),
-            ),
-            child: const Text(
-              'imagine',
-              style: TextStyle(
-                color: Color(0xFF7E8485),
-              ),
-            ),
+              if (suggestions.suggestion != null)
+                Text(suggestions.suggestion!.toString()),
+              const Spacer(),
+            ],
           ),
-          const Spacer(),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -99,5 +118,13 @@ class _SuggestionsViewState extends State<SuggestionsView> {
         )
       ],
     );
+  }
+
+  void generateOutfit({
+    required ClosetProvider closet,
+    required SuggestionsProvider suggestions,
+    required String prompt,
+  }) {
+    suggestions.generateOutfit(prompt: prompt, closet: closet);
   }
 }

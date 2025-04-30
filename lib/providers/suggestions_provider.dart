@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stich/chat/chat.dart';
@@ -37,7 +39,7 @@ class SuggestionsProvider extends ChangeNotifier {
     OpenAIChatCompletionModel output = await generator.generateOutfit(
       prompt: prompt,
     );
-    String response = output.choices.first.message.toString();
+    String response = output.choices.first.message.content!.first.text!;
     if (response.isEmpty) {
       return false;
     }
@@ -46,7 +48,8 @@ class SuggestionsProvider extends ChangeNotifier {
     // and use the ClosetProvider to get the actual objects
 
     // Example response: {"top": 1, "bottom": 2, "shoes": 3}
-    Map<String, dynamic> parsedResponse = response as Map<String, dynamic>;
+    print(response);
+    Map<String, dynamic> parsedResponse = jsonDecode(response);
     int topId = parsedResponse['top'] as int;
     int bottomId = parsedResponse['bottom'] as int;
     int shoesId = parsedResponse['shoes'] as int;
@@ -64,6 +67,7 @@ class SuggestionsProvider extends ChangeNotifier {
     );
 
     print(output.choices.first.message.toString());
+    notifyListeners();
     return true;
   }
 }

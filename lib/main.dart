@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stich/env/env.dart';
 import 'package:stich/helpers/constants.dart';
+import 'package:stich/helpers/mock_data.dart';
 import 'package:stich/helpers/tab_state.dart';
+import 'package:stich/providers/closet_provider.dart';
+import 'package:stich/providers/suggestions_provider.dart';
 import 'package:stich/views/suggestions_view.dart';
 import 'package:stich/widgets/tab_selector.dart';
 import 'package:dart_openai/dart_openai.dart';
@@ -23,21 +27,35 @@ class _MainAppState extends State<MainApp> {
   TabState _selectedTab = TabState.suggestions;
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      home: CupertinoPageScaffold(
-        child: SafeArea(
-          child: Column(
-            children: [
-              if (_selectedTab == TabState.suggestions)
-                const Expanded(
-                  child: SuggestionsView(),
-                ),
-              if (_selectedTab == TabState.closet)
-                const Expanded(
-                  child: Placeholder(),
-                ),
-              _bottomBar(),
-            ],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SuggestionsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ClosetProvider(
+            tops: getMockTops(),
+            bottoms: getMockBottoms(),
+            shoes: getMockShoes(),
+          ),
+        ),
+      ],
+      child: CupertinoApp(
+        home: CupertinoPageScaffold(
+          child: SafeArea(
+            child: Column(
+              children: [
+                if (_selectedTab == TabState.suggestions)
+                  const Expanded(
+                    child: SuggestionsView(),
+                  ),
+                if (_selectedTab == TabState.closet)
+                  const Expanded(
+                    child: Placeholder(),
+                  ),
+                _bottomBar(),
+              ],
+            ),
           ),
         ),
       ),

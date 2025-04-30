@@ -9,7 +9,9 @@ enum ClothingMaterial {
   rayon("rayon"),
   spandex("spandex"),
   suede("suede"),
-  velvet("velvet");
+  velvet("velvet"),
+  canvas("canvas"),
+  fleece("fleece");
 
   final String name;
 

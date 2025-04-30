@@ -21,4 +21,9 @@ class Bottom extends Article {
       'type': type.toString(),
     };
   }
+
+  @override
+  String toString() {
+    return 'Bottom(id: $id, primaryColor: $primaryColor, secondaryColor: $secondaryColor, material: $material, type: $type)';
+  }
 }

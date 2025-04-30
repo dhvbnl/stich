@@ -12,4 +12,9 @@ class Outfit {
     required this.bottom,
     required this.shoes,
   });
+
+  @override
+  String toString() {
+    return 'Outfit(top: $top, bottom: $bottom, shoes: $shoes)';
+  }
 }

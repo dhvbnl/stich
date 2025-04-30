@@ -21,4 +21,9 @@ class Top extends Article {
       'type': type.name,
     };
   }
+
+  @override
+  String toString() {
+    return 'Top(id: $id, primaryColor: $primaryColor, secondaryColor: $secondaryColor, material: $material, type: $type)';
+  }
 }

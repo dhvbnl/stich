@@ -19,7 +19,9 @@ class Generator {
       role: OpenAIChatMessageRole.system,
     );
   }
-Future<OpenAIChatCompletionModel> generateOutfit({required String prompt}) async {
+
+  Future<OpenAIChatCompletionModel> generateOutfit(
+      {required String prompt}) async {
     final userMessage = OpenAIChatCompletionChoiceMessageModel(
       content: [
         OpenAIChatCompletionChoiceMessageContentItemModel.text(
@@ -32,12 +34,13 @@ Future<OpenAIChatCompletionModel> generateOutfit({required String prompt}) async
       _systemMessage!,
       userMessage,
     ];
-    Future<OpenAIChatCompletionModel> chatCompletion = OpenAI.instance.chat.create(
+    Future<OpenAIChatCompletionModel> chatCompletion =
+        OpenAI.instance.chat.create(
       model: model,
       responseFormat: {"type": "json_object"},
       seed: 6,
       messages: requestMessages,
-      temperature: 0.2,
+      temperature: 1,
       maxTokens: 1500,
     );
     return chatCompletion;

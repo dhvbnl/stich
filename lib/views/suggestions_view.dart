@@ -1,5 +1,8 @@
+import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stich/chat/chat.dart';
+import 'package:stich/chat/mock_data.dart';
 
 class SuggestionsView extends StatefulWidget {
   const SuggestionsView({super.key});
@@ -36,7 +39,9 @@ class _SuggestionsViewState extends State<SuggestionsView> {
           _input(),
           const Divider(),
           OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              _chatTest();
+            },
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
               shadowColor: WidgetStatePropertyAll<Color>(Colors.transparent),
@@ -99,5 +104,14 @@ class _SuggestionsViewState extends State<SuggestionsView> {
         )
       ],
     );
+  }
+
+  Future<void> _chatTest() async {
+    Generator generator = Generator();
+    generator.clothes = mockData;
+    print('generating...');
+    OpenAIChatCompletionModel output =
+        await generator.generateOutfit(prompt: 'dinner on a cruise');
+    print(output.choices.first.message.toString());
   }
 }

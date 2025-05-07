@@ -17,6 +17,10 @@ class SuggestionsProvider extends ChangeNotifier {
 
   Outfit? get suggestion => _suggestion;
 
+  void setNull() {
+    _suggestion = null;
+  }
+
   Future<bool> generateOutfit(
       {required String prompt, required ClosetProvider closet}) async {
     if (prompt.isEmpty) {

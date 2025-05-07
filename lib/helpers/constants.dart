@@ -16,3 +16,16 @@ with the following structure: {
   "bottom": {id},
   "shoes": {id}
 }""";
+const kSystemPromptClassify =
+    """Hi! You are a clothing classifier. I will provide you
+with an image file of a clothing article. Based on the image, please classify the
+article as one of the following categories: top, bottom, or shoes. Please format the output JSON
+with the following structure: {
+  "category": {category},
+  "primaryColor": {primaryColor},
+  "secondaryColor": {secondaryColor},
+  "material": {material}
+}
+where {category} is one of the following: top, bottom, or shoes.
+Also add "topType" if its a top, "bottomType" if its a bottom, and "shoeType" if its a shoe.
+""";

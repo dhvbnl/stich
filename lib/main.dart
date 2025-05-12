@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stich/env/env.dart';
-import 'package:stich/helpers/constants.dart';
 import 'package:stich/helpers/mock_data.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
-import 'package:stich/views/article_view.dart';
 import 'package:stich/views/suggestions_view.dart';
+import 'package:stich/widgets/add_photo.dart';
 import 'package:stich/widgets/tab_selector.dart';
-import 'package:dart_openai/dart_openai.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
-  OpenAI.apiKey = Env.apiKey;
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -90,9 +90,14 @@ class MainScreen extends StatelessWidget {
 
   Widget _bottomBar(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20, left: 40, right: 40),
+      padding: const EdgeInsets.only(
+        bottom: 20,
+        left: 40,
+        right: 40,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             flex: 4,
@@ -104,34 +109,9 @@ class MainScreen extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             flex: 1,
-            child: IconButton.filled(
-              style: IconButton.styleFrom(
-                minimumSize: const Size(55, 55),
-                iconSize: 35,
-                backgroundColor: kSecondaryColor,
-                shape: const CircleBorder(),
-              ),
-              onPressed: () async {
-                await cameraTest(context);
-              },
-              icon: const Icon(Icons.add, color: kPrimaryColor),
-            ),
+            child: AddPhoto(),
           ),
         ],
-      ),
-    );
-  }
-}
-
-Future<void> cameraTest(BuildContext context) async {
-  final picker = ImagePicker();
-  final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-  if (context.mounted && image != null) {
-    Navigator.push(
-      context,
-      CupertinoPageRoute(
-        builder: (context) => ArticleView(image: image),
       ),
     );
   }

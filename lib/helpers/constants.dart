@@ -8,6 +8,8 @@ const kDurationShort = Duration(milliseconds: 300);
 const kDurationNone = Duration(milliseconds: 0);
 const kMaxRadius = Radius.circular(9999);
 const kTabBarHeight = 50.0;
+const kIconButtonSize = 60.0;
+const k45DegreeRad = 0.7853981633974483;
 const kSystemPrompt = """Hi! You are an outfit recommender. I will provide you 
 with a JSON with clothing articles. Based on a given prompt, please pick the 
 best combination of a top, bottom, and shoes. Please format the output JSON 
@@ -28,4 +30,6 @@ with the following structure: {
 }
 where {category} is one of the following: top, bottom, or shoes.
 Also add "topType" if its a top, "bottomType" if its a bottom, and "shoeType" if its a shoe.
+If there is no secondary color, please set it to "none". Take the best guess for everything else.
+DO NOT USE ANY CATEGORIES THAT AREN'T IN THE PROVIDED OPTIONS. TAKE YOUR BEST GUESS.
 """;

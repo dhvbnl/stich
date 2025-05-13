@@ -13,7 +13,8 @@ enum ClothingColor {
   pink("pink"),
   cyan("cyan"),
   magenta("magenta"),
-  beige("beige");
+  beige("beige"),
+  none("none");
 
   final String name;
 

@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:openai_dart/openai_dart.dart';
 import 'package:stich/chat/chat.dart';
 import 'package:stich/models/bottom.dart';
 import 'package:stich/models/outfit.dart';
@@ -34,21 +34,15 @@ class SuggestionsProvider extends ChangeNotifier {
     }
     ''';
 
-    generator.clothes = closetJSON;
+    generator.wardrobeDescription = closetJSON;
 
-    OpenAIChatCompletionModel output = await generator.generateOutfit(
-      prompt: prompt,
-    );
-    String response = output.choices.first.message.content!.first.text!;
+    CreateChatCompletionResponse output =
+        await generator.getOutfitSuggestions(userPrompt: prompt);
+    String response = output.choices.first.message.content!;
     if (response.isEmpty) {
       return false;
     }
 
-    // Parse the response to get an int from the fields: top, bottom, shoes
-    // and use the ClosetProvider to get the actual objects
-
-    // Example response: {"top": 1, "bottom": 2, "shoes": 3}
-    print(response);
     Map<String, dynamic> parsedResponse = jsonDecode(response);
     int topId = parsedResponse['top'] as int;
     int bottomId = parsedResponse['bottom'] as int;

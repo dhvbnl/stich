@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stich/helpers/constants.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
 
@@ -37,6 +38,10 @@ class _SuggestionsViewState extends State<SuggestionsView> {
           child: Column(
             children: [
               _title(),
+              //Artifical space to make up for the bottom navigationBar
+              const SizedBox(
+                height: kIconButtonSize * 2,
+              ),
               const Spacer(),
               _input(),
               const Divider(),

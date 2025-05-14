@@ -6,11 +6,13 @@ class Article {
   final ClothingColor primaryColor;
   final ClothingColor secondaryColor;
   final ClothingMaterial material;
+  String imageUrl;
 
   Article({
     required this.id,
     required this.primaryColor,
     required this.secondaryColor,
     required this.material,
+    this.imageUrl = '',
   });
 }

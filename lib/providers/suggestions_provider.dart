@@ -44,6 +44,7 @@ class SuggestionsProvider extends ChangeNotifier {
     }
 
     Map<String, dynamic> parsedResponse = jsonDecode(response);
+    print(parsedResponse);
     int topId = parsedResponse['top'] as int;
     int bottomId = parsedResponse['bottom'] as int;
     int shoesId = parsedResponse['shoes'] as int;

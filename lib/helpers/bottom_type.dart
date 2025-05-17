@@ -7,9 +7,17 @@ enum BottomType {
   sweatpants("sweatpants"),
   cargo("cargo"),
   chinos("chinos"),
-  cordoroy("corduroy");
+  cordoroy("corduroy"),
+  unknown("unknown");
 
   final String name;
 
   const BottomType(this.name);
+
+  static BottomType fromString(String type) {
+    return BottomType.values.firstWhere(
+      (bottomType) => bottomType.name == type,
+      orElse: () => BottomType.unknown,
+    );
+  }
 }

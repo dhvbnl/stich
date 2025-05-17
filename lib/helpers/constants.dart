@@ -10,6 +10,8 @@ const kMaxRadius = Radius.circular(9999);
 const kTabBarHeight = 50.0;
 const kIconButtonSize = 60.0;
 const k45DegreeRad = 0.7853981633974483;
+const kStandardError = 'An error occurred. Please try again.';
+const kValidCategories = ['top', 'bottom', 'shoes'];
 const kSystemPrompt = """Hi! You are an outfit recommender. I will provide you 
 with a JSON with clothing articles. Based on a given prompt, please pick the 
 best combination of a top, bottom, and shoes. Please format the output JSON 

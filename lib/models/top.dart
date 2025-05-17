@@ -10,6 +10,7 @@ class Top extends Article {
     required super.secondaryColor,
     required super.material,
     required this.type,
+    super.imageUrl = '',
   });
 
   Map<String, dynamic> toJson() {

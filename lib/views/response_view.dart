@@ -27,15 +27,17 @@ class ResponseView extends StatelessWidget {
               children: [
               title(suggestions),
               Expanded(
-                child: Column(
-                  children: [
-                    top(suggestions.suggestion!.top),
-                    SizedBox(height: 16),
-                    bottom(suggestions.suggestion!.bottom),
-                    SizedBox(height: 16),
-                    shoes(suggestions.suggestion!.shoes),
-                    SizedBox(height: 16),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      top(suggestions.suggestion!.top),
+                      SizedBox(height: 16),
+                      bottom(suggestions.suggestion!.bottom),
+                      SizedBox(height: 16),
+                      shoes(suggestions.suggestion!.shoes),
+                      SizedBox(height: 16),
+                    ],
+                  ),
                 ),
               ),
               button(context, suggestions)
@@ -79,15 +81,23 @@ class ResponseView extends StatelessWidget {
   }
 
   Widget top(Top top) {
-    return Text(top.toString());
+    return _clothingItem(top.imageUrl);
   }
 
   Widget bottom(Bottom bottom) {
-    return Text(bottom.toString());
+    return _clothingItem(bottom.imageUrl);
   }
 
   Widget shoes(Shoes shoes) {
-    return Text(shoes.toString());
+    return _clothingItem(shoes.imageUrl);
+  }
+
+  Widget _clothingItem(String url) {
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: Image.network(url,
+      width: 200),
+    );
   }
 
 }

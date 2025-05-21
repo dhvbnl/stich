@@ -4,6 +4,7 @@ import 'package:stich/helpers/mock_data.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
+import 'package:stich/views/closet_view.dart';
 import 'package:stich/views/suggestions_view.dart';
 import 'package:stich/widgets/add_photo.dart';
 import 'package:stich/widgets/tab_selector.dart';
@@ -37,9 +38,9 @@ class _MainAppState extends State<MainApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => ClosetProvider(
-            tops: getMockTops(),
-            bottoms: getMockBottoms(),
-            shoes: getMockShoes(),
+            tops: [],
+            bottoms: [],
+            shoes:[],
           ),
         ),
       ],
@@ -80,7 +81,7 @@ class MainScreen extends StatelessWidget {
             if (selectedTab == TabState.suggestions)
               const Expanded(child: SuggestionsView()),
             if (selectedTab == TabState.closet)
-              const Expanded(child: Placeholder()),
+              const Expanded(child: ClosetView()),
             _bottomBar(context),
           ],
         ),

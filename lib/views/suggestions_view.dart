@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:stich/helpers/constants.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
 import 'package:stich/views/response_view.dart';
@@ -14,6 +16,7 @@ class SuggestionsView extends StatefulWidget {
 
 class _SuggestionsViewState extends State<SuggestionsView> {
   late TextEditingController _textController;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -51,37 +54,58 @@ class _SuggestionsViewState extends State<SuggestionsView> {
               const Spacer(),
               _input(),
               const Divider(),
-              OutlinedButton(
-                onPressed: () {
-                  if (_textController.text.isEmpty) {
-                    return;
-                  }
-                  generateOutfit(
-                    closet: closet,
-                    suggestions: suggestions,
-                    prompt: _textController.text,
-                  );
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, animation) {
+                  return FadeTransition(opacity: animation, child: child);
                 },
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
-                  shadowColor:
-                      WidgetStatePropertyAll<Color>(Colors.transparent),
-                  side: WidgetStatePropertyAll<BorderSide>(
-                    BorderSide(
-                      color: Color(0xFF7E8485),
-                    ),
-                  ),
-                  overlayColor: WidgetStatePropertyAll<Color>(
-                      Color.fromARGB(73, 126, 132, 133)),
-                ),
-                child: const Text(
-                  'imagine',
-                  style: TextStyle(
-                    color: Color(0xFF7E8485),
-                  ),
-                ),
+                child: _isLoading
+                    ? LoadingAnimationWidget.staggeredDotsWave(
+                        key: const ValueKey('loading'),
+                        color: kGrayColor,
+                        size: kLoadingSize,
+                      )
+                    : OutlinedButton(
+                        key: const ValueKey('button'),
+                        onPressed: () {
+                          if (_textController.text.isEmpty) {
+                            return;
+                          }
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          generateOutfit(
+                            closet: closet,
+                            suggestions: suggestions,
+                            prompt: _textController.text,
+                          );
+                        },
+                        style: const ButtonStyle(
+                          backgroundColor:
+                              WidgetStatePropertyAll<Color>(Colors.white),
+                          shadowColor:
+                              WidgetStatePropertyAll<Color>(Colors.transparent),
+                          side: WidgetStatePropertyAll<BorderSide>(
+                            BorderSide(
+                              color: kGrayColor,
+                            ),
+                          ),
+                          overlayColor: WidgetStatePropertyAll<Color>(
+                            kGrayColor,
+                          ),
+                        ),
+                        child: const Text(
+                          'imagine',
+                          style: TextStyle(
+                            color: kGrayColor,
+                          ),
+                        ),
+                      ),
               ),
               const Spacer(),
+              const SizedBox(
+                height: kIconButtonSize,
+              )
             ],
           ),
         );

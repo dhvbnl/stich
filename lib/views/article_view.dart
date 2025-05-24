@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:openai_dart/openai_dart.dart' as openai;
 import 'package:provider/provider.dart';
 import 'package:stich/chat/chat.dart';
@@ -142,7 +143,11 @@ class _ArticleViewState extends State<ArticleView> {
               child: Column(
                 children: [
                   if (_loading)
-                    const CupertinoActivityIndicator()
+                    LoadingAnimationWidget.staggeredDotsWave(
+                      key: const ValueKey('loading'),
+                      color: kSecondaryColor,
+                      size: kLoadingSize,
+                    )
                   else if (_tempArticle != null && _generated)
                     _modifyTempArticleControls()
                   else

@@ -20,4 +20,9 @@ enum BottomType {
       orElse: () => BottomType.unknown,
     );
   }
+
+  @override
+  String toString() {
+    return name;
+  }
 }

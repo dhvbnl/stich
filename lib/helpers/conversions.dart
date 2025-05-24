@@ -12,7 +12,7 @@ import 'package:stich/helpers/shoes_type.dart';
 import 'package:stich/helpers/top_type.dart';
 import 'package:stich/models/article.dart';
 
-SvgPicture getSvgFromArticle({
+Widget getSvgFromArticle({
   required ClothingType type,
   TopType? topType,
   BottomType? bottomType,
@@ -20,31 +20,39 @@ SvgPicture getSvgFromArticle({
   required ClothingColor primaryColor,
   required ClothingColor secondaryColor,
 }) {
-  if ((type == ClothingType.top && topType == null) ||
-      (type == ClothingType.bottom && bottomType == null) ||
-      (type == ClothingType.shoes && shoesType == null)) {
-    throw Exception('Invalid article: Missing specific type for $type');
+  try {
+    if ((type == ClothingType.top && topType == null) ||
+        (type == ClothingType.bottom && bottomType == null) ||
+        (type == ClothingType.shoes && shoesType == null)) {
+      throw Exception('Invalid article: Missing specific type for $type');
+    }
+    String svgPath = '';
+    switch (type) {
+      case ClothingType.top:
+        svgPath = 'assets/top_icons/$topType.svg';
+        break;
+      case ClothingType.bottom:
+        svgPath = 'assets/bottom_icons/$bottomType.svg';
+        break;
+      case ClothingType.shoes:
+        svgPath = 'assets/shoes_icons/$shoesType.svg';
+        break;
+    }
+    return SvgPicture.asset(
+      svgPath,
+      colorFilter: ColorFilter.mode(
+        primaryColor.toColor(),
+        BlendMode.srcIn,
+      ),
+      width: 100,
+      height: 100,
+    );
+  } catch (e) {
+    return Icon(
+      CupertinoIcons.question_circle,
+      size: 100,
+    );
   }
-  String svgPath = '';
-  switch (type) {
-    case ClothingType.top:
-      svgPath = 'assets/top_icons/$topType.svg';
-    case ClothingType.bottom:
-      svgPath = 'assets/bottom_icons/$bottomType.svg';
-      break;
-    case ClothingType.shoes:
-      svgPath = 'assets/shoes_icons/$shoesType.svg';
-      break;
-  }
-  return SvgPicture.asset(
-    svgPath,
-    colorFilter: ColorFilter.mode(
-      primaryColor.toColor(),
-      BlendMode.srcIn,
-    ),
-    width: 100,
-    height: 100,
-  );
 }
 
 TempArticle articleFromClassification(

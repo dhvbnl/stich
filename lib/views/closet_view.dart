@@ -18,19 +18,14 @@ class ClosetView extends StatelessWidget {
     return Consumer2<ClosetProvider, SuggestionsProvider>(
         builder: (context, closet, suggestions, child) {
       return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _title(),
-              _tops(closet),
-              _bottoms(closet),
-              _shoes(closet)
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _title(),
+            _tops(closet),
+            _bottoms(closet),
+            _shoes(closet),
+          ],
         ),
       );
     });
@@ -153,21 +148,6 @@ class ClosetView extends StatelessWidget {
             shoes?.secondaryColor ??
             ClothingColor.white,
       ),
-      // child: Image.network(
-      //   url,
-      //   width: 100,
-      //   errorBuilder: (context, error, stackTrace) {
-      //     return Container(
-      //       width: 100,
-      //       color: Colors.grey,
-      //       child: const Icon(
-      //         CupertinoIcons.photo,
-      //         size: 50,
-      //         color: Colors.white,
-      //       ),
-      //     );
-      //   },
-      // ),
     );
   }
 }

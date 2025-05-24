@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 const kSecondaryColor = Color(0xFF0C1618);
+const kTertiaryColor = Color(0xFF6A5D7B);
 const kPrimaryColor = Color(0xFFE2E8DD);
 const kCurve = Cubic(0.175, 0.885, 0.5, 1.025);
 const kDurationMedium = Duration(milliseconds: 500);

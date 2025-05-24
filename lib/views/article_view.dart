@@ -137,6 +137,7 @@ class _ArticleViewState extends State<ArticleView> {
                 ),
               ),
             ),
+            const SizedBox(height: 16),
             Expanded(
               child: Column(
                 children: [
@@ -293,11 +294,16 @@ class _ArticleViewState extends State<ArticleView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label, style: const TextStyle(fontSize: 18)),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
             Text(
               value.toString().split('.').last,
               style: const TextStyle(
-                color: CupertinoColors.activeBlue,
+                color: kTertiaryColor,
                 fontSize: 18,
               ),
             ),
@@ -332,7 +338,9 @@ class _ArticleViewState extends State<ArticleView> {
               children: items
                   .map(
                     (item) => Center(
-                      child: Text(item.toString().split('.').last),
+                      child: Text(
+                        item.toString().split('.').last,
+                      ),
                     ),
                   )
                   .toList(),

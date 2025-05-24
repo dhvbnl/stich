@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'package:stich/helpers/mock_data.dart';
+import 'package:stich/helpers/constants.dart';
 import 'package:stich/helpers/tab_state.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
@@ -76,14 +76,46 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       child: SafeArea(
-        child: Column(
-          children: [
-            if (selectedTab == TabState.suggestions)
-              const Expanded(child: SuggestionsView()),
-            if (selectedTab == TabState.closet)
-              const Expanded(child: ClosetView()),
-            _bottomBar(context),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            bottom: 20,
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Stack(
+                children: [
+                  Column(
+                    children: [
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            if (selectedTab == TabState.suggestions)
+                              SizedBox(
+                                width: constraints.maxWidth,
+                                child: const SuggestionsView(),
+                              ),
+                            if (selectedTab == TabState.closet)
+                              SizedBox(
+                                width: constraints.maxWidth,
+                                child: const ClosetView(),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: _bottomBar(context),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
@@ -91,10 +123,8 @@ class MainScreen extends StatelessWidget {
 
   Widget _bottomBar(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 20,
-        left: 40,
-        right: 40,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

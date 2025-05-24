@@ -1,14 +1,14 @@
 enum BottomType {
-  jeans("jeans"),
-  shorts("shorts"),
-  skirt("skirt"),
-  trousers("trousers"),
-  leggings("leggings"),
-  sweatpants("sweatpants"),
-  cargo("cargo"),
-  chinos("chinos"),
-  cordoroy("corduroy"),
-  unknown("unknown");
+  jeans("Jeans"),
+  shorts("Shorts"),
+  skirt("Skirt"),
+  trousers("Trousers"),
+  leggings("Leggings"),
+  sweatpants("Sweatpants"),
+  cargo("Cargo"),
+  chinos("Chinos"),
+  cordoroy("Corduroy"),
+  unknown("Unknown");
 
   final String name;
 

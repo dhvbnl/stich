@@ -38,3 +38,5 @@ flutter:
         - asset: assets/fonts/PlaywriteUSTrad-ExtraLight.ttf
   assets:
     - assets/top_icons/
+    - assets/bottom_icons/
+    - assets/shoes_icons/

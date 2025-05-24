@@ -45,50 +45,44 @@ class _SuggestionsViewState extends State<SuggestionsView> {
         }
         return Container(
           color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25,
-            ),
-            child: Column(
-              children: [
-                _title(),
-                const Spacer(),
-                _input(),
-                const Divider(),
-                OutlinedButton(
-                  onPressed: () {
-                    if (_textController.text.isEmpty) {
-                      return;
-                    }
-                    generateOutfit(
-                      closet: closet,
-                      suggestions: suggestions,
-                      prompt: _textController.text,
-                    );
-                  },
-                  style: const ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll<Color>(Colors.white),
-                    shadowColor:
-                        WidgetStatePropertyAll<Color>(Colors.transparent),
-                    side: WidgetStatePropertyAll<BorderSide>(
-                      BorderSide(
-                        color: Color(0xFF7E8485),
-                      ),
-                    ),
-                    overlayColor: WidgetStatePropertyAll<Color>(
-                        Color.fromARGB(73, 126, 132, 133)),
-                  ),
-                  child: const Text(
-                    'imagine',
-                    style: TextStyle(
+          child: Column(
+            children: [
+              _title(),
+              const Spacer(),
+              _input(),
+              const Divider(),
+              OutlinedButton(
+                onPressed: () {
+                  if (_textController.text.isEmpty) {
+                    return;
+                  }
+                  generateOutfit(
+                    closet: closet,
+                    suggestions: suggestions,
+                    prompt: _textController.text,
+                  );
+                },
+                style: const ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                  shadowColor:
+                      WidgetStatePropertyAll<Color>(Colors.transparent),
+                  side: WidgetStatePropertyAll<BorderSide>(
+                    BorderSide(
                       color: Color(0xFF7E8485),
                     ),
                   ),
+                  overlayColor: WidgetStatePropertyAll<Color>(
+                      Color.fromARGB(73, 126, 132, 133)),
                 ),
-                const Spacer(),
-              ],
-            ),
+                child: const Text(
+                  'imagine',
+                  style: TextStyle(
+                    color: Color(0xFF7E8485),
+                  ),
+                ),
+              ),
+              const Spacer(),
+            ],
           ),
         );
       },

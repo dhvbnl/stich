@@ -1,30 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stich/main.dart';
 import 'package:stich/models/bottom.dart';
-import 'package:stich/models/outfit.dart';
 import 'package:stich/models/shoes.dart';
 import 'package:stich/models/top.dart';
 import 'package:stich/providers/suggestions_provider.dart';
-import 'package:stich/views/suggestions_view.dart';
 
 class ResponseView extends StatelessWidget {
   final String prompt;
 
-  const ResponseView(
-      {super.key, required this.prompt});
+  const ResponseView({super.key, required this.prompt});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<SuggestionsProvider>(
-      builder: (context, suggestions, child) {
-        return Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              children: [
+        builder: (context, suggestions, child) {
+      return Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            children: [
               title(suggestions),
               Expanded(
                 child: SingleChildScrollView(
@@ -41,18 +37,17 @@ class ResponseView extends StatelessWidget {
                 ),
               ),
               button(context, suggestions)
-            ],),
+            ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 
   Widget title(SuggestionsProvider suggestions) {
     return Text(
       prompt,
-      style: const TextStyle(fontSize: 28,
-      color: Color(0xFF7E8485)),
+      style: const TextStyle(fontSize: 28, color: Color(0xFF7E8485)),
     );
   }
 
@@ -76,8 +71,10 @@ class ResponseView extends StatelessWidget {
           overlayColor:
               WidgetStatePropertyAll<Color>(Color.fromARGB(73, 126, 132, 133)),
         ),
-        child: const Text('back',
-        style: TextStyle(color: Color(0xFF7E8485)),));
+        child: const Text(
+          'back',
+          style: TextStyle(color: Color(0xFF7E8485)),
+        ));
   }
 
   Widget top(Top top) {
@@ -95,9 +92,22 @@ class ResponseView extends StatelessWidget {
   Widget _clothingItem(String url) {
     return Padding(
       padding: EdgeInsets.all(5.0),
-      child: Image.network(url,
-      width: 200),
+      child: Image.network(
+        url,
+        width: 200,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            width: 200,
+            height: 200,
+            color: Colors.grey[300],
+            child: Icon(
+              Icons.broken_image,
+              size: 50,
+              color: Colors.grey[700],
+            ),
+          );
+        },
+      ),
     );
   }
-
 }

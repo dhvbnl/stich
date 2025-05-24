@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stich/helpers/constants.dart';
 import 'package:stich/providers/closet_provider.dart';
 import 'package:stich/providers/suggestions_provider.dart';
 import 'package:stich/views/response_view.dart';
@@ -68,7 +67,8 @@ class _SuggestionsViewState extends State<SuggestionsView> {
                     );
                   },
                   style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                    backgroundColor:
+                        WidgetStatePropertyAll<Color>(Colors.white),
                     shadowColor:
                         WidgetStatePropertyAll<Color>(Colors.transparent),
                     side: WidgetStatePropertyAll<BorderSide>(
@@ -86,8 +86,6 @@ class _SuggestionsViewState extends State<SuggestionsView> {
                     ),
                   ),
                 ),
-                if (suggestions.suggestion != null)
-                  Text(suggestions.suggestion!.toString()),
                 const Spacer(),
               ],
             ),

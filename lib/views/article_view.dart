@@ -1,9 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:openai_dart/openai_dart.dart' as openai;
 import 'package:provider/provider.dart';
 import 'package:stich/chat/chat.dart';
 import 'package:stich/helpers/bottom_type.dart';
@@ -11,6 +9,7 @@ import 'package:stich/helpers/clothing_color.dart';
 import 'package:stich/helpers/clothing_material.dart';
 import 'package:stich/helpers/clothing_type.dart';
 import 'package:stich/helpers/constants.dart';
+import 'package:stich/helpers/conversions.dart';
 import 'package:stich/helpers/shoes_type.dart';
 import 'package:stich/helpers/top_type.dart';
 import 'package:stich/models/article.dart';
@@ -27,9 +26,21 @@ class ArticleView extends StatefulWidget {
 class _ArticleViewState extends State<ArticleView> {
   bool _loading = false;
   String? _classification; // whatever format your model returns
-  String? _firebaseUrl;
+  late Future<String> _firebaseUrl;
+  late Future<openai.CreateChatCompletionResponse> _classificationResponse;
   String? _error;
   TempArticle? _tempArticle;
+  bool _generated = false;
+  final chat = Chat();
+
+  Future<void> _startGeneration() async {
+    final closet = context.read<ClosetProvider>();
+    _firebaseUrl = closet.savePicture(widget.image);
+    final firebaseUrl = await _firebaseUrl;
+    _classificationResponse = chat.classifyClothingImage(
+      imageUrl: firebaseUrl,
+    );
+  }
 
   Future<void> _handleGenerateArticle() async {
     setState(() {
@@ -39,27 +50,27 @@ class _ArticleViewState extends State<ArticleView> {
     });
 
     try {
-      final closet = context.read<ClosetProvider>();
-      _firebaseUrl = await closet.savePicture(widget.image);
-
-      final chat = Chat();
-      final response = await chat.classifyClothingImage(
-        imageUrl: _firebaseUrl!,
-      );
+      final firebaseUrl = await _firebaseUrl;
+      final response = await _classificationResponse;
 
       if (response.choices.isEmpty) {
         throw Exception('No response from the model');
       }
 
       _classification = response.choices.first.message.content;
-      _tempArticle = _articleFromClassification(
+      _tempArticle = articleFromClassification(
         classification: _classification!,
-        imageUrl: _firebaseUrl!,
+        imageUrl: firebaseUrl,
       );
     } catch (e) {
       setState(() => _error = e.toString());
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _generated = true;
+        });
+      }
     }
   }
 
@@ -99,6 +110,12 @@ class _ArticleViewState extends State<ArticleView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _startGeneration();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -113,9 +130,9 @@ class _ArticleViewState extends State<ArticleView> {
               child: Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.file(
-                    File(widget.image.path),
-                    fit: BoxFit.contain,
+                  child: Image.asset(
+                    widget.image.path,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -125,7 +142,7 @@ class _ArticleViewState extends State<ArticleView> {
                 children: [
                   if (_loading)
                     const CupertinoActivityIndicator()
-                  else if (_tempArticle != null)
+                  else if (_tempArticle != null && _generated)
                     _modifyTempArticleControls()
                   else
                     ElevatedButton(
@@ -330,41 +347,5 @@ class _ArticleViewState extends State<ArticleView> {
         );
       },
     );
-  }
-
-  TempArticle _articleFromClassification(
-      {required String classification, required String imageUrl}) {
-    // Parse the JSON string into a Map
-    final Map<String, dynamic> json = jsonDecode(classification);
-
-    // Check if the JSON contains the required keys
-    if (!json.containsKey('category') ||
-        !json.containsKey('primaryColor') ||
-        !json.containsKey('secondaryColor') ||
-        !json.containsKey('material')) {
-      throw Exception('Invalid JSON format');
-    }
-    if (!kValidCategories.contains(json['category'])) {
-      throw Exception('Invalid category: ${json['category']}');
-    }
-
-    final category = ClothingType.fromString(json['category']);
-    var article = TempArticle(
-      imageUrl: imageUrl,
-      type: category,
-      primaryColor: ClothingColor.fromString(json['primaryColor'] ?? ''),
-      secondaryColor: ClothingColor.fromString(json['secondaryColor'] ?? ''),
-      material: ClothingMaterial.fromString(json['material'] ?? ''),
-      topType: category == ClothingType.top
-          ? TopType.fromString(json['topType'])
-          : null,
-      bottomType: category == ClothingType.bottom
-          ? BottomType.fromString(json['bottomType'])
-          : null,
-      shoesType: category == ClothingType.shoes
-          ? ShoesType.fromString(json['shoeType'])
-          : null,
-    );
-    return article;
   }
 }

@@ -40,7 +40,7 @@ class _MainAppState extends State<MainApp> {
           create: (context) => ClosetProvider(
             tops: [],
             bottoms: [],
-            shoes:[],
+            shoes: [],
           ),
         ),
       ],

@@ -16,7 +16,7 @@ class Chat {
 
   Chat({
     String apiKey = Env.apiKey,
-    String modelId = 'gpt-4.1-nano',
+    String modelId = 'gpt-4.1-mini',
   })  : _openAIClient = OpenAIClient(apiKey: apiKey),
         _chatModel = ChatCompletionModel.modelId(modelId);
 

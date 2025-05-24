@@ -19,7 +19,9 @@ with the following structure: {
   "top": {id},
   "bottom": {id},
   "shoes": {id}
-}""";
+}
+DO NOT CHANGE ANY OF THIS FORMAT.
+""";
 const kSystemPromptClassify =
     """Hi! You are a clothing classifier. I will provide you
 with an image file of a clothing article. Based on the image, please classify the
@@ -32,6 +34,7 @@ with the following structure: {
 }
 where {category} is one of the following: top, bottom, or shoes.
 Also add "topType" if its a top, "bottomType" if its a bottom, and "shoeType" if its a shoe.
-If there is no secondary color, please set it to "none". Take the best guess for everything else.
+If there is no secondary color, please set it to "none".
+The primary color MUST be set before the secondary color.
 DO NOT USE ANY CATEGORIES THAT AREN'T IN THE PROVIDED OPTIONS. TAKE YOUR BEST GUESS.
 """;

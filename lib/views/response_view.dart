@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:stich/main.dart';
 import 'package:stich/models/bottom.dart';
@@ -8,8 +9,9 @@ import 'package:stich/providers/suggestions_provider.dart';
 
 class ResponseView extends StatelessWidget {
   final String prompt;
-
-  const ResponseView({super.key, required this.prompt});
+  final Isar isar;
+  const ResponseView(
+      {super.key, required this.prompt, required this.isar});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class ResponseView extends StatelessWidget {
           suggestions.setNull();
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const MainApp()),
+            MaterialPageRoute(builder: (context) => MainApp(isar: isar)),
           );
         },
         style: const ButtonStyle(

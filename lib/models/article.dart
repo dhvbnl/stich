@@ -1,3 +1,4 @@
+import 'package:isar/isar.dart';
 import 'package:stich/helpers/bottom_type.dart';
 import 'package:stich/helpers/clothing_color.dart';
 import 'package:stich/helpers/clothing_material.dart';
@@ -6,14 +7,15 @@ import 'package:stich/helpers/shoes_type.dart';
 import 'package:stich/helpers/top_type.dart';
 
 class Article {
-  final int id;
+  @enumerated
   final ClothingColor primaryColor;
+  @enumerated
   final ClothingColor secondaryColor;
+  @enumerated
   final ClothingMaterial material;
   String imageUrl;
 
   Article({
-    required this.id,
     required this.primaryColor,
     required this.secondaryColor,
     required this.material,

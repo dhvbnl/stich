@@ -1,11 +1,18 @@
+import 'package:isar/isar.dart';
 import 'package:stich/helpers/shoes_type.dart';
 import 'package:stich/models/article.dart';
+import 'package:stich/helpers/clothing_color.dart';
+import 'package:stich/helpers/clothing_material.dart';
 
+part 'shoes.g.dart';
+
+@collection
 class Shoes extends Article {
+  @enumerated
   final ShoesType type;
+  Id id = Isar.autoIncrement;
 
   Shoes({
-    required super.id,
     required super.primaryColor,
     required super.secondaryColor,
     required super.material,

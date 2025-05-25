@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:isar/isar.dart';
 import 'package:provider/provider.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:stich/helpers/constants.dart';
@@ -8,7 +9,8 @@ import 'package:stich/providers/suggestions_provider.dart';
 import 'package:stich/views/response_view.dart';
 
 class SuggestionsView extends StatefulWidget {
-  const SuggestionsView({super.key});
+  final Isar isar;
+  const SuggestionsView({super.key, required this.isar});
 
   @override
   State<SuggestionsView> createState() => _SuggestionsViewState();
@@ -41,6 +43,7 @@ class _SuggestionsViewState extends State<SuggestionsView> {
               MaterialPageRoute(
                 builder: (context) => ResponseView(
                   prompt: _textController.text,
+                  isar: widget.isar,
                 ),
               ),
             );

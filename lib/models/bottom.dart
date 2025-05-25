@@ -1,11 +1,18 @@
+import 'package:isar/isar.dart';
 import 'package:stich/helpers/bottom_type.dart';
 import 'package:stich/models/article.dart';
+import 'package:stich/helpers/clothing_color.dart';
+import 'package:stich/helpers/clothing_material.dart';
 
+part 'bottom.g.dart';
+
+@collection
 class Bottom extends Article {
+  @enumerated
   final BottomType type;
+  Id id = Isar.autoIncrement;
 
   Bottom({
-    required super.id,
     required super.primaryColor,
     required super.secondaryColor,
     required super.material,

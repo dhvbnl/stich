@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:isar/isar.dart';
 import 'package:stich/helpers/bottom_type.dart';
 import 'package:stich/helpers/clothing_color.dart';
 import 'package:stich/helpers/clothing_material.dart';
@@ -19,14 +20,17 @@ class ClosetProvider extends ChangeNotifier {
   final List<Bottom> _bottoms;
   final List<Shoes> _shoes;
   final firebaseStorage = FirebaseStorage.instance.ref();
+  final Isar _isar;
 
   ClosetProvider({
     required List<Top> tops,
     required List<Bottom> bottoms,
     required List<Shoes> shoes,
+    required Isar isar
   })  : _tops = tops,
         _bottoms = bottoms,
-        _shoes = shoes;
+        _shoes = shoes,
+        _isar = isar;
 
   List<Top> get tops => _tops;
   List<Bottom> get bottoms => _bottoms;
@@ -40,14 +44,8 @@ class ClosetProvider extends ChangeNotifier {
     required ClothingMaterial material,
     required TopType type,
   }) {
-    //get max id from list of tops
-    //change to be more efficient later
-    int maxId = _tops.isNotEmpty
-        ? _tops.map((top) => top.id).reduce((a, b) => a > b ? a : b)
-        : 0;
     //create new top
     Top newTop = Top(
-      id: maxId + 1,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
       material: material,
@@ -55,6 +53,7 @@ class ClosetProvider extends ChangeNotifier {
       imageUrl: imageUrl,
     );
     //add new top to list
+    _isar.writeTxnSync(() => _isar.tops.putSync(newTop));
     _tops.add(newTop);
     notifyListeners();
   }
@@ -67,14 +66,8 @@ class ClosetProvider extends ChangeNotifier {
     required ClothingMaterial material,
     required BottomType type,
   }) {
-    //get max id from list of bottoms
-    //change to be more efficient later
-    int maxId = _bottoms.isNotEmpty
-        ? _bottoms.map((bottom) => bottom.id).reduce((a, b) => a > b ? a : b)
-        : 0;
     //create new bottom
     Bottom newBottom = Bottom(
-      id: maxId + 1,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
       material: material,
@@ -82,6 +75,7 @@ class ClosetProvider extends ChangeNotifier {
       imageUrl: imageUrl,
     );
     //add new bottom to list
+    _isar.writeTxnSync(() => _isar.bottoms.putSync(newBottom));
     _bottoms.add(newBottom);
     notifyListeners();
   }
@@ -94,14 +88,8 @@ class ClosetProvider extends ChangeNotifier {
     required ClothingMaterial material,
     required ShoesType type,
   }) {
-    //get max id from list of shoes
-    //change to be more efficient later
-    int maxId = _shoes.isNotEmpty
-        ? _shoes.map((shoe) => shoe.id).reduce((a, b) => a > b ? a : b)
-        : 0;
     //create new shoe
     Shoes newShoe = Shoes(
-      id: maxId + 1,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
       material: material,
@@ -109,6 +97,7 @@ class ClosetProvider extends ChangeNotifier {
       imageUrl: imageUrl,
     );
     //add new shoe to list
+    _isar.writeTxnSync(() => _isar.shoes.putSync(newShoe));
     _shoes.add(newShoe);
     notifyListeners();
   }
